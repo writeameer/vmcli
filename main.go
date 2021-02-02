@@ -2,38 +2,29 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
-
-	"github.com/Azure/go-autorest/autorest"
-	"github.com/writeameer/vmcli/clients"
-	"github.com/writeameer/vmcli/config"
 )
 
 var (
-	subscriptionID     = "367c3873-5d48-4c62-aec6-e23d28d181e4"
-	armAuthorizer      autorest.Authorizer
-	batchAuthorizer    autorest.Authorizer
-	graphAuthorizer    autorest.Authorizer
-	keyvaultAuthorizer autorest.Authorizer
-
-	userAgent string
+	ctx = context.Background()
 )
 
 func main() {
 
-	config.ParseEnvironment()
+	// subnet, err := GetVirtualNetworkSubnet(ctx, "vnet-prod", "snet-tier3-dbvm", "rg-ea-vm-prod")
 
-	fmt.Println("Hello World")
-	resourceClient := clients.GetGroupsClient()
+	// if err != nil {
+	// 	log.Println("Could not get subnet")
+	// 	panic(err)
+	// }
+	// log.Println(subnet.AddressPrefix)
+	// os.Exit(0)
 
-	result, err := resourceClient.List(context.Background(), "", nil)
+	nic, err := CreateNIC(ctx, "vnet-prod", "snet-tier3-dbvm", "", "", "ameer-vm-nic", "rg-ea-vm-prod")
 
 	if err != nil {
 		panic(err)
 	}
 
-	for _, item := range result.Values() {
-		log.Println(*item.Name)
-	}
+	log.Println(nic.Name)
 }

@@ -13,7 +13,7 @@ func ParseEnvironment() error {
 	// Use AZURE_BASE_GROUP_NAME and `config.GenerateGroupName()` instead.
 	// groupName = os.Getenv("AZURE_GROUP_NAME")
 	// baseGroupName = os.Getenv("AZURE_BASE_GROUP_NAME")
-	// locationDefault = os.Getenv("AZURE_LOCATION_DEFAULT")
+	locationDefault = os.Getenv("AZURE_LOCATION_DEFAULT")
 
 	// these must be provided by environment
 	// clientID

@@ -15,6 +15,7 @@ import (
 
 // GetGroupsClient Get Resource Groups Client
 func GetGroupsClient() resources.GroupsClient {
+	config.ParseEnvironment()
 	groupsClient := resources.NewGroupsClient(config.SubscriptionID())
 	a, err := iam.GetResourceManagementAuthorizer()
 	if err != nil {
