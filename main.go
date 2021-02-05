@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"log"
+
+	"github.com/writeameer/vmcli/config"
 )
 
 var (
@@ -11,20 +13,32 @@ var (
 
 func main() {
 
-	// subnet, err := GetVirtualNetworkSubnet(ctx, "vnet-prod", "snet-tier3-dbvm", "rg-ea-vm-prod")
+	config.ParseEnvironment()
 
-	// if err != nil {
-	// 	log.Println("Could not get subnet")
-	// 	panic(err)
-	// }
-	// log.Println(subnet.AddressPrefix)
-	// os.Exit(0)
+	CreateVM("rg-ea-net-prod", "test01", "azureuser", "P@ssw0rd!@#", "EastAsia", "MicrosoftSQLServer", "SQL2016SP2-WS2016", "Enterprise")
 
-	nic, err := CreateNIC(ctx, "vnet-prod", "snet-tier3-dbvm", "", "", "ameer-vm-nic", "rg-ea-vm-prod")
+}
+
+func getSubnet() {
+
+	config.ParseEnvironment()
+	subnet, err := GetVirtualNetworkSubnet(ctx, "vnet-prod", "snet-tier3-dbvm", "rg-ea-net-prod")
+
+	if err != nil {
+		log.Println("Could not get subnet")
+		panic(err)
+	}
+
+	log.Println(*subnet.AddressPrefix)
+
+}
+
+func nicStuff() {
+	nic, err := CreateNIC(ctx, "vnet-prod", "snet-tier3-dbvm", "", "", "ameer-vm-nic", "rg-ea-net-prod")
 
 	if err != nil {
 		panic(err)
 	}
 
-	log.Println(nic.Name)
+	log.Println(*nic.Name)
 }

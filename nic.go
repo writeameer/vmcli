@@ -13,15 +13,24 @@ import (
 
 // GetVirtualNetworkSubnet returns an existing subnet from a virtual network
 func GetVirtualNetworkSubnet(ctx context.Context, vnetName string, subnetName string, groupName string) (network.Subnet, error) {
+	config.ParseEnvironment()
 	subnetsClient := clients.GetSubnetsClient()
 	return subnetsClient.Get(ctx, groupName, vnetName, subnetName, "")
 }
 
 // CreateNIC Creates a NIC
 func CreateNIC(ctx context.Context, vnetName string, subnetName string, nsgName string, ipName string, nicName string, groupName string) (nic network.Interface, err error) {
+
 	subnet, err := GetVirtualNetworkSubnet(ctx, vnetName, subnetName, groupName)
+
+	//GetVirtualNetworkSubnet(ctx, "vnet-prod", "snet-tier3-dbvm", "rg-ea-net-prod")
+
 	if err != nil {
-		log.Fatalf("failed to get subnet: %v", err)
+		log.Println("failed to get subnet:")
+		log.Println("vnet name: " + vnetName)
+		log.Println("subnet name: " + subnetName)
+		log.Println("groupName name: " + groupName)
+		log.Fatal(err)
 	}
 
 	nicParams := network.Interface{

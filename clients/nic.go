@@ -8,6 +8,7 @@ import (
 
 // GetNicClient gets the NIC client
 func GetNicClient() network.InterfacesClient {
+	config.ParseEnvironment()
 	nicClient := network.NewInterfacesClient(config.SubscriptionID())
 	auth, _ := iam.GetResourceManagementAuthorizer()
 	nicClient.Authorizer = auth
